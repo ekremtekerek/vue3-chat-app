@@ -3,22 +3,29 @@
         <h4>Giriş Yap</h4>
         <input type="mail" placeholder="Mail Adresinizi Giriniz" v-model="email" required>
         <input type="password" placeholder="Parolanızı Giriniz" v-model="parola" required>
-        <button type="submit">Üye Ol</button>
+        <button type="submit">Giriş Yap</button>
       </form>
+      <div>
+        {{ hata }}
+      </div>
 </template>
 
 <script>
+import useLogin from '../composables/useLogin'
+
 import {ref} from 'vue'
 export default {
     setup() {
         const email = ref('')
         const parola = ref('')
+        const {hata,login}=useLogin()
 
-        const girisYap = () => {
-           console.log(email.value, parola.value);
+        const girisYap = async () => {
+           await login(email.value,parola.value);
+
         }
 
-        return {email, parola,girisYap}
+        return {email,hata, parola,girisYap}
 
     }
 }
