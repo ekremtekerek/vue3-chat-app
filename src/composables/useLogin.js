@@ -11,9 +11,8 @@ const login=async (email,parola)=>{
         const res=await auth.signInWithEmailAndPassword(email,parola);
 
         if(!res){
-            throw new Error('Login işlemi gerçekleşmedi')
+            throw new Error('Giriş işlemi gerçekleşmedi')
         }
-
 
         hata.value=null;
         return res;

@@ -1,36 +1,37 @@
 <template>
-    <form @submit.prevent="girisYap">
-        <h4>Giriş Yap</h4>
-        <input type="mail" placeholder="Mail Adresinizi Giriniz" v-model="email" required>
-        <input type="password" placeholder="Parolanızı Giriniz" v-model="parola" required>
-        <button type="submit">Giriş Yap</button>
-      </form>
-      <div>
-        {{ hata }}
-      </div>
+  <form @submit.prevent="girisYap">
+      <h4>Giriş Ekranı</h4>
+
+        <input type="text" placeholder="Email Giriniz" v-model="email" />
+        <input type="password" placeholder="Parola Giriniz" v-model="parola" />
+        <button>Giriş</button>
+  </form>
+   <div class="error">
+      {{hata}}
+  </div>
 </template>
 
 <script>
-import useLogin from '../composables/useLogin'
-
 import {ref} from 'vue'
+import useLogin from '../composables/useLogin';
+
 export default {
-    setup(props,context) {
-        const email = ref('')
-        const parola = ref('')
-        const {hata,login}=useLogin()
 
-        const girisYap = async () => {
-           await login(email.value,parola.value);
+    setup(props,context){
+        
+        const email=ref('')
+        const parola=ref('')
 
-           if(!hata.value) {
-            context.emit('login')
-           }
+        const {hata,login} =useLogin()
 
+        const girisYap=async ()=>{
+            login(email.value,parola.value);
+            if(!hata.value){
+                context.emit('login')
+            }
         }
 
-        return {email,hata, parola,girisYap}
-
+        return {email,parola,girisYap,hata}
     }
 }
 </script>

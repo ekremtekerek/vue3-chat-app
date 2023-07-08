@@ -1,15 +1,18 @@
 <template>
-  <div class="container">
-    <NavBar/>
-  </div>
+ <div class="container">
+     <Navbar />
+     <ChatWindow />
+     <ChatForm />
+ </div>
 </template>
 
 <script>
-import NavBar from '@/components/NavBar.vue'
+import Navbar from '../components/Navbar'
+import ChatForm from '../components/ChatForm'
+import ChatWindow from '../components/ChatWindow'
+
 export default {
-    components:{
-        NavBar
-    }
+    components:{Navbar,ChatForm,ChatWindow}
 }
 </script>
 

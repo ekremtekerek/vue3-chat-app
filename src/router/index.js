@@ -1,23 +1,51 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { createRouter, createWebHistory } from 'vue-router'
+import Home from '../views/Home.vue'
 import ChatOda from '../views/ChatOda.vue'
+import {auth} from '../firebase/config';
+
+
+const authKontrol=(to,from,next)=>{
+
+    const kullanici=auth.currentUser;
+
+    if(!kullanici){
+      next({name:'Home'})
+    }else{
+      next()
+    }
+    
+}
+
+
+const chatKontrol=(to,from,next)=>{
+
+  const kullanici=auth.currentUser;
+
+  if(kullanici){
+    next({name:'ChatOda'})
+  }else{
+    next()
+  }
+  
+}
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView
+    name: 'Home',
+    component: Home,
+    beforeEnter:chatKontrol
   },
   {
     path: '/chat',
-    name: 'chat',
-    component: ChatOda
-  },
-
+    name: 'ChatOda',
+    component: ChatOda,
+    beforeEnter:authKontrol
+  }
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(process.env.BASE_URL),
   routes
 })
 

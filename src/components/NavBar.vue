@@ -1,28 +1,32 @@
 <template>
   <nav>
-    <div>
-        <p>Merhaba kullanici_ad</p>
-        <p class="email">email_adres ile giriş yaptınız.</p>
-        <button @click="cikisYap">Çıkış Yap</button>
-    </div>
+      <div>
+          <p>Merhaba {{kullanici.displayName}}</p>
+          <p class="email">{{kullanici.email}} ile giriş yaptınız</p>
+      </div>
+      <button @click="cikisYap">Çıkış Yap</button>
   </nav>
 </template>
 
 <script>
-import {auth} from '@/firebase/config'
+import {auth} from '../firebase/config';
 import {useRouter} from 'vue-router'
+import getUser from '../composables/getUser';
+
 export default {
-    setup() {
-        const router = useRouter()
-
-       const cikisYap = async () => {
-            await auth.signOut().then(() => {
-                router.push({name:'home'})
+    setup(){
+        const router=useRouter();
+        const {kullanici} =getUser();
+        const cikisYap=async()=>{
+            await auth.signOut().then(()=>{
+                router.push({name:'Home'})
             })
-       }
+        }
 
-       return {cikisYap}
+
+        return {cikisYap,kullanici}
     }
+
 }
 </script>
 
