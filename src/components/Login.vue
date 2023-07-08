@@ -15,13 +15,17 @@ import useLogin from '../composables/useLogin'
 
 import {ref} from 'vue'
 export default {
-    setup() {
+    setup(props,context) {
         const email = ref('')
         const parola = ref('')
         const {hata,login}=useLogin()
 
         const girisYap = async () => {
            await login(email.value,parola.value);
+
+           if(!hata.value) {
+            context.emit('login')
+           }
 
         }
 
