@@ -1,15 +1,34 @@
 <template>
   <div class="home container">
     <h2>Chat App</h2>
+    <div>
+      <div v-if="uyeMi">
+        <Login/>
+        <p>Üye Olmak İçin <span @click="uyeMi=false">Üye Ol</span> Sayfasına Gidiniz</p>
+      </div>      
+      <div v-else>
+        <Register/> 
+        <p>Üyeyseniz, Giriş Yapmak İçin <span @click="uyeMi=true">Giriş Yap</span> Sayfasına Gidiniz</p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
+import Register from '@/components/Register.vue'
+import Login from '@/components/Login.vue'
+import {ref} from 'vue'
 
 export default {
   name: 'HomeView',
   components: {
+    Register, Login
+  },
+  setup() {
+    const uyeMi = ref(true)
+
+    return {uyeMi}
   }
 }
 </script>
